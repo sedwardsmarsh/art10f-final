@@ -60,29 +60,6 @@ def humanDetector(args):
         detectByPathImage(image_path, args['output'])
 
 
-def detectByCamera(writer):   
-    video = cv2.VideoCapture(0)
-    print('Detecting people...')
-
-    while True:
-        check, frame = video.read()
-
-        frame, num_people = detect(frame)
-        if writer is not None:
-            writer.write(frame)
-
-        # play sound for the number of people in the frame
-        for person in num_people:
-            print(person)
-
-        key = cv2.waitKey(1)
-        if key == ord('q'):
-            break
-
-    video.release()
-    cv2.destroyAllWindows()
-
-
 def detectByPathVideo(path, writer):
 
     video = cv2.VideoCapture(path)
@@ -118,9 +95,12 @@ def detectByCamera(writer):
     while True:
         check, frame = video.read()
 
-        frame = detect(frame)
+        frame, num_people = detect(frame)
         if writer is not None:
             writer.write(frame)
+
+        # play sound for the number of people in the frame
+        print(num_people-1)
 
         key = cv2.waitKey(1)
         if key == ord('q'):
