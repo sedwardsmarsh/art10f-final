@@ -6,11 +6,14 @@ import numpy as np
 import argparse
 import playsound
 import time
+import random
 
 
-SOUNDFILE_PATH = 'sound.wav'
+SOUNDFILE_PATHS = [f'mine{i}.wav' for i in range(1, 8)]
+MODEL_SENSITIVITY = 2
 HOGCV = cv2.HOGDescriptor()
 HOGCV.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+# cv2.createEigenFaceRecognizer()
 
 
 def argsParser():
@@ -101,9 +104,9 @@ def detectByCamera(writer):
             writer.write(frame)
 
         # play sound for the number of people in the frame
-        print(num_people-1)
-        for _ in range(num_people-1):
-            playsound.playsound(SOUNDFILE_PATH)
+        print(num_people-MODEL_SENSITIVITY)
+        for _ in range(num_people-MODEL_SENSITIVITY):
+            playsound.playsound(random.choice(SOUNDFILE_PATHS))
             # time.sleep(0.5)
             pass
 
