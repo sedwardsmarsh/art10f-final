@@ -9,11 +9,10 @@ import time
 import random
 
 
-SOUNDFILE_PATHS = [f'mine{i}.wav' for i in range(1, 8)]
+SOUNDFILE_PATHS = [f'sfx/mine{i}.wav' for i in range(1, 8)]
 MODEL_SENSITIVITY = 2
 HOGCV = cv2.HOGDescriptor()
 HOGCV.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-# cv2.createEigenFaceRecognizer()
 
 
 def argsParser():
@@ -107,8 +106,6 @@ def detectByCamera(writer):
         print(num_people-MODEL_SENSITIVITY)
         for _ in range(num_people-MODEL_SENSITIVITY):
             playsound.playsound(random.choice(SOUNDFILE_PATHS))
-            # time.sleep(0.5)
-            pass
 
         key = cv2.waitKey(1)
         if key == ord('q'):
