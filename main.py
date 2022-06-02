@@ -4,8 +4,11 @@ import cv2
 import imutils
 import numpy as np
 import argparse
+import playsound
+import time
 
 
+SOUNDFILE_PATH = 'sound.wav'
 HOGCV = cv2.HOGDescriptor()
 HOGCV.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
@@ -79,7 +82,7 @@ def detectByPathVideo(path, writer):
             
             if writer is not None:
                 writer.write(frame)
-            
+
             key = cv2.waitKey(1)
             if key== ord('q'):
                 break
@@ -91,21 +94,22 @@ def detectByPathVideo(path, writer):
 def detectByCamera(writer):   
     video = cv2.VideoCapture(0)
     print('Detecting people...')
-
     while True:
         check, frame = video.read()
-
         frame, num_people = detect(frame)
         if writer is not None:
             writer.write(frame)
 
         # play sound for the number of people in the frame
         print(num_people-1)
+        for _ in range(num_people-1):
+            playsound.playsound(SOUNDFILE_PATH)
+            # time.sleep(0.5)
+            pass
 
         key = cv2.waitKey(1)
         if key == ord('q'):
                 break
-
     video.release()
     cv2.destroyAllWindows()
 
@@ -123,6 +127,5 @@ def detectByPathImage(path, output_path):
 if __name__ == "__main__":
     HOGCV = cv2.HOGDescriptor()
     HOGCV.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-
     args = argsParser()
     humanDetector(args)
