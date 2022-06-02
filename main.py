@@ -1,5 +1,7 @@
 # Source: https://data-flair.training/blogs/python-project-real-time-human-detection-counting/
 
+# TO START THIS RUN: `python main.py -c True` boom badda bing
+
 import cv2
 import imutils
 import numpy as np
